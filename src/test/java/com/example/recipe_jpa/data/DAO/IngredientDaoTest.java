@@ -1,6 +1,6 @@
 package com.example.recipe_jpa.data.DAO;
 
-import com.example.recipe_jpa.model.Ingredient;
+import com.example.recipe_jpa.model.entities.Ingredient;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

@@ -1,12 +1,11 @@
 package com.example.recipe_jpa.data.DAO;
 
-import com.example.recipe_jpa.model.Recipe;
+import com.example.recipe_jpa.model.entities.Recipe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Set;
 
 public interface RecipeDao extends JpaRepository<Recipe,Integer> {
     //First function
