@@ -19,6 +19,10 @@ public class RecipeInstruction {
     public RecipeInstruction() {
     }
 
+    public RecipeInstruction(String instructions) {
+        this.instructions = instructions;
+    }
+
     public String getId() {
         return id;
     }

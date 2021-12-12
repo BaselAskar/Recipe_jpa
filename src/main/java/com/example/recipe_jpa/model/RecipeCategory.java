@@ -25,7 +25,11 @@ public class RecipeCategory {
     public RecipeCategory() {
     }
 
-    public int getId() {
+     public RecipeCategory(String category) {
+         this.category = category;
+     }
+
+     public int getId() {
         return id;
     }
 

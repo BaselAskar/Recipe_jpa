@@ -25,12 +25,18 @@ public class RecipeIngredient {
 
     @ManyToOne(
             cascade = {CascadeType.DETACH,CascadeType.REFRESH},
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @JoinColumn(name = "fk_recipe_id")
     private Recipe recipe;
 
     public RecipeIngredient() {
+    }
+
+    public RecipeIngredient(double amount, Measurement measurement, Ingredient ingredient) {
+        setAmount(amount);
+        setMeasurement(measurement);
+        setIngredient(ingredient);
     }
 
     public String getId() {
