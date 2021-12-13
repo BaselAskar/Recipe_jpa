@@ -10,9 +10,7 @@ import java.io.Serializable;
 @Validated
 public class IngredientForm implements Serializable {
 
-    @NotBlank(message = "id must not be null or empty!!",groups = {OnPost.class})
     private int id;
-
 
     @NotBlank(message = "ingredient name has to be existed!!",groups = {OnPost.class, OnPut.class})
     private String ingredientName;

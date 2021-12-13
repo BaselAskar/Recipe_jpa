@@ -1,5 +1,6 @@
 package com.example.recipe_jpa.model.dto.form;
 
+import com.example.recipe_jpa.model.entities.Ingredient;
 import com.example.recipe_jpa.model.entities.Measurement;
 import com.example.recipe_jpa.validation.OnPost;
 import com.example.recipe_jpa.validation.OnPut;
@@ -25,8 +26,6 @@ public class RecipeIngredientForm implements Serializable {
     @NotNull(message = "you have to insert ingredient!!",groups = {OnPost.class,OnPut.class})
     @Valid private IngredientForm ingredient;
 
-    @NotNull(message = "Recipe is requiqed",groups = {OnPost.class,OnPut.class})
-    @Valid private RecipeForm recipe;
 
     public RecipeIngredientForm() {
     }
@@ -55,7 +54,7 @@ public class RecipeIngredientForm implements Serializable {
         this.measurement = measurement;
     }
 
-    public IngredientForm getIngredient() {
+    public Ingredient getIngredient() {
         return ingredient;
     }
 
@@ -63,11 +62,4 @@ public class RecipeIngredientForm implements Serializable {
         this.ingredient = ingredient;
     }
 
-    public RecipeForm getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(RecipeForm recipe) {
-        this.recipe = recipe;
-    }
 }
