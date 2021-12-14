@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
+import java.util.*;
 
 public interface RecipeDao extends JpaRepository<Recipe,Integer> {
     //First function
@@ -28,6 +28,6 @@ public interface RecipeDao extends JpaRepository<Recipe,Integer> {
 
     //Forth function
 
-    @Query("SELECT rc.recipes FROM RecipeCategory rc WHERE rc.category IN (:categories)")
-    List<Recipe> searchByAnyCategories(@Param("categories") String... categories);
+    @Query("SELECT rc.recipes FROM RecipeCategory rc WHERE rc.category IN :categories")
+    Set<Recipe> searchByAnyCategories(@Param("categories") String... categories);
 }

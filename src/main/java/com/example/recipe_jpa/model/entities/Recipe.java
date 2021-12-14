@@ -151,4 +151,15 @@ public class Recipe {
     public void setRecipeInstruction(RecipeInstruction recipeInstruction) {
         this.recipeInstruction = recipeInstruction;
     }
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + id +
+                ", recipeName='" + recipeName + '\'' +
+                ", recipeIngredients=" + recipeIngredients.stream().map(RecipeIngredient::getIngredient).toString() +
+                ", categories=" + categories.stream().map(RecipeCategory::getCategory).toString() +
+                ", recipeInstruction=" + recipeInstruction +
+                '}';
+    }
 }

@@ -29,7 +29,7 @@ public class RecipeIngredientCreationImpl implements RecipeIngredientCreation{
         recipeIngredient.setId(recipeIngredientForm.getId());
         recipeIngredient.setAmount(recipeIngredientForm.getAmount());
         recipeIngredient.setMeasurement(recipeIngredientForm.getMeasurement());
-        recipeIngredient.setIngredient(recipeIngredientForm.getIngredient());
+
 
         return recipeIngredientDao.save(recipeIngredient);
     }

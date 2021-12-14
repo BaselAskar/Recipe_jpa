@@ -23,8 +23,6 @@ public class RecipeIngredientForm implements Serializable {
 
     private Measurement measurement;
 
-    @NotNull(message = "you have to insert ingredient!!",groups = {OnPost.class,OnPut.class})
-    @Valid private IngredientForm ingredient;
 
 
     public RecipeIngredientForm() {
@@ -54,12 +52,5 @@ public class RecipeIngredientForm implements Serializable {
         this.measurement = measurement;
     }
 
-    public Ingredient getIngredient() {
-        return ingredient;
-    }
-
-    public void setIngredient(IngredientForm ingredient) {
-        this.ingredient = ingredient;
-    }
 
 }

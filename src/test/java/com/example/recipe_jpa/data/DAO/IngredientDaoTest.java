@@ -54,4 +54,14 @@ class IngredientDaoTest {
 
         assertEquals(2,result.size());
     }
+
+    @Test
+    void findByIngredientName() {
+
+        em.persist(new Ingredient("Tomato"));
+
+        Ingredient ingredient = testObject.findByIngredientName("Tomato");
+
+        assertNotNull(ingredient);
+    }
 }

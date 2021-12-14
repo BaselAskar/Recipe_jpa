@@ -33,10 +33,11 @@ public class RecipeIngredient {
     public RecipeIngredient() {
     }
 
-    public RecipeIngredient(double amount, Measurement measurement, Ingredient ingredient) {
+    public RecipeIngredient(double amount, Measurement measurement,Ingredient ingredient) {
         setAmount(amount);
         setMeasurement(measurement);
         setIngredient(ingredient);
+
     }
 
     public String getId() {

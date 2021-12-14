@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,13 +24,21 @@ class RecipeDaoTest {
     private RecipeDao testObject;
 
     @Autowired
+    private IngredientDao ingredientDao;
+
+    @Autowired
     private TestEntityManager em;
 
 
+    private Ingredient ingredientPotato = new Ingredient("Potato");
+    private Ingredient ingredientTomato = new Ingredient("Tomato");
+    private Ingredient ingredientSalt = new Ingredient("Salt");
+    private Ingredient ingredientPepper = new Ingredient("Pepper");
+
     //First constants
     public List<RecipeIngredient> recipeIngredients1() {return new ArrayList<>(Arrays.asList(
-            new RecipeIngredient(500, Measurement.G,new Ingredient("Potato")),
-            new RecipeIngredient(2.5,Measurement.G,new Ingredient("Salt"))
+            new RecipeIngredient(500, Measurement.G,ingredientPotato),
+            new RecipeIngredient(2.5,Measurement.G,ingredientSalt)
     ));
     }
 
@@ -48,9 +57,9 @@ class RecipeDaoTest {
 
     {
         return new ArrayList<>(Arrays.asList(
-                new RecipeIngredient(500, Measurement.G, new Ingredient("Potato")),
-                new RecipeIngredient(250, Measurement.G, new Ingredient("Tomato")),
-                new RecipeIngredient(20, Measurement.G, new Ingredient("Pepper"))
+                new RecipeIngredient(500, Measurement.G,ingredientPotato),
+                new RecipeIngredient(250, Measurement.G,ingredientTomato),
+                new RecipeIngredient(20, Measurement.G,ingredientPepper)
         ));
     }
 
@@ -75,38 +84,41 @@ class RecipeDaoTest {
     @BeforeEach
     void setUp() {
 
+        Ingredient persistedIngredientPotato = em.persist(ingredientPotato);
+        Ingredient persistedIngredientTomato = em.persist(ingredientTomato);
+        Ingredient persistedIngredientSalt = em.persist(ingredientSalt);
+        Ingredient persistedIngredientPepper = em.persist(ingredientPepper);
+
         //First arguments
-        List<RecipeIngredient> persistedRecipeIngredient1 = new ArrayList<>();
-        recipeIngredients1().forEach(ri -> {
-           ri = em.persist(ri);
-            persistedRecipeIngredient1.add(ri);
-        });
+        List<RecipeIngredient> persistedRecipeIngredient1 = recipeIngredients1().stream()
+                .map(ri -> {
+                    ri.setIngredient(ingredientDao.findByIngredientName(ri.getIngredient().getIngredientName()));
+                    return em.persist(ri);
+                })
+                .collect(Collectors.toList());
 
 
 
-        List<RecipeCategory> persistedCategories1 = new ArrayList<>();
-        categories1().forEach(ca -> {
-            ca = em.persistAndFlush(ca);
-            persistedCategories1.add(ca);
-        });
+
+        List<RecipeCategory> persistedCategories1 = categories1().stream()
+                .map(em::persist)
+                .collect(Collectors.toList());
+
 
         RecipeInstruction persistedInstruction1 = em.persist(instruction1());
 
 
         //Second arguments
-        List<RecipeIngredient> persistedRecipeIngredient2 = new ArrayList<>();
-        recipeIngredients2().forEach(ri -> {
-            ri = em.persist(ri);
-            em.refresh(ri);
-            persistedRecipeIngredient1.add(ri);
-        });
+        List<RecipeIngredient> persistedRecipeIngredient2 = recipeIngredients2().stream()
+                .map(ri -> {
+                    ri.setIngredient(ingredientDao.findByIngredientName(ri.getIngredient().getIngredientName()));
+                    return em.persist(ri);
+                })
+                .collect(Collectors.toList());
 
-
-        List<RecipeCategory> persistedCategories2 = new ArrayList<>();
-        categories2().forEach(ca -> {
-            ca = em.persistAndFlush(ca);
-            persistedCategories1.add(ca);
-        });
+        List<RecipeCategory> persistedCategories2 = categories2().stream()
+                .map(em::persist)
+                .collect(Collectors.toList());
 
         RecipeInstruction persistedInstruction2 = em.persist(instruction2());
 
@@ -167,13 +179,31 @@ class RecipeDaoTest {
 
     @Test
     void findAllByCategoriesCategory() {
+        int expected = 2;
+
+        List<Recipe> recipes = testObject.findAllByCategoriesCategory("Potato food");
+
+        assertEquals(expected,recipes.size());
     }
 
     @Test
     void searchByCategory() {
+        int expected = 2;
+
+        List<Recipe> recipes = testObject.searchByCategory("Potato food");
+
+        assertEquals(expected,recipes.size());
+
     }
 
     @Test
     void searchByAnyCategories() {
+
+        int expected = 2;
+
+        Set<Recipe> recipes = testObject.searchByAnyCategories("Potato food","Lunch food");
+
+        assertEquals(expected,recipes.size());
+
     }
 }

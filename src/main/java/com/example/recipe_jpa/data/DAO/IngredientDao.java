@@ -10,4 +10,6 @@ public interface IngredientDao extends JpaRepository<Ingredient,Integer> {
     Ingredient findByIngredientNameIgnoringCase(String name);
 
     List<Ingredient> findAllByIngredientNameContainingIgnoringCase(String name);
+
+    Ingredient findByIngredientName(String name);
 }
