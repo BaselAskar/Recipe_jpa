@@ -3,8 +3,11 @@ package com.example.recipe_jpa.controller;
 import com.example.recipe_jpa.model.dto.facade.IngredientDto;
 import com.example.recipe_jpa.model.dto.form.IngredientForm;
 import com.example.recipe_jpa.services.entities.IngredientService;
+import com.example.recipe_jpa.validation.OnPost;
+import com.example.recipe_jpa.validation.OnPut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +29,15 @@ public class IngredientController {
         return ResponseEntity.ok().body(ingredient);
     }
 
+    @GetMapping("/api/v1/ingredients/ingredient_name")
+    public ResponseEntity<List<IngredientDto>> searchByIngredientName(@RequestParam("name") String name){
+        List<IngredientDto> ingredients = ingredientService.searchByIngredientName(name);
+        return ResponseEntity.ok(ingredients);
+    }
+
+
+
+
     @GetMapping("/api/v1/ingredients")
     public ResponseEntity<List<IngredientDto>> getAll(){
         List<IngredientDto> ingredients = ingredientService.findAll();
@@ -33,13 +45,13 @@ public class IngredientController {
     }
 
     @PostMapping("api/v1/ingredients")
-    public ResponseEntity<IngredientDto> create(@RequestBody IngredientForm ingredientForm){
+    public ResponseEntity<IngredientDto> create(@RequestBody @Validated(OnPost.class) IngredientForm ingredientForm){
         IngredientDto ingredient = ingredientService.create(ingredientForm);
         return ResponseEntity.status(201).body(ingredient);
     }
 
     @PutMapping("/api/v1/ingredients/{id}")
-    public ResponseEntity<IngredientDto> update(@PathVariable("id") int id,@RequestBody IngredientForm ingredientForm){
+    public ResponseEntity<IngredientDto> update(@PathVariable("id") int id,@RequestBody @Validated(OnPut.class) IngredientForm ingredientForm){
         IngredientDto ingredient = ingredientService.update(id,ingredientForm);
         return ResponseEntity.ok().body(ingredient);
     }

@@ -1,6 +1,7 @@
 package com.example.recipe_jpa.services.entities;
 
 import com.example.recipe_jpa.data.DAO.IngredientDao;
+import com.example.recipe_jpa.exception.NotFoundException;
 import com.example.recipe_jpa.model.dto.facade.IngredientDto;
 import com.example.recipe_jpa.model.dto.form.IngredientForm;
 import com.example.recipe_jpa.model.entities.Ingredient;
@@ -62,7 +63,7 @@ public class IngredientServiceImpl implements IngredientService{
         if (ingredient.isPresent()){
             return mapper.map(ingredient.get(),IngredientDto.class);
         }else {
-            throw new IllegalArgumentException("ingredient is not found!!");
+            throw new NotFoundException("ingredient is not found!!");
         }
     }
 
@@ -80,5 +81,24 @@ public class IngredientServiceImpl implements IngredientService{
         ingredientDao.deleteById(id);
 
         return !ingredientDao.findById(id).isPresent();
+    }
+
+    @Override
+    public IngredientDto findByIngredientName(String ingredientName) {
+        if (ingredientName == null) throw new IllegalArgumentException("ingredient name is null!!");
+
+        Ingredient ingredient = ingredientDao.findByIngredientNameIgnoringCase(ingredientName);
+        return mapper.map(ingredient,IngredientDto.class);
+    }
+
+    @Override
+    public List<IngredientDto> searchByIngredientName(String name) {
+        if (name == null || name == "".trim()) throw new IllegalArgumentException("name is not correct!!");
+
+        List<Ingredient> ingredients = ingredientDao.findAllByIngredientNameContainingIgnoringCase(name);
+
+        return ingredients.stream()
+                .map(ingredient -> mapper.map(ingredient,IngredientDto.class))
+                .collect(Collectors.toList());
     }
 }

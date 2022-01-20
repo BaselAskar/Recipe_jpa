@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class RecipeController {
@@ -23,6 +24,27 @@ public class RecipeController {
     public ResponseEntity<RecipeDTO> getById(@PathVariable("id") int id){
         RecipeDTO recipeDTO = recipeService.findById(id);
         return ResponseEntity.ok().body(recipeDTO);
+    }
+
+
+    @GetMapping("/api/v1/recipes/category")
+    public ResponseEntity<List<RecipeDTO>> findByCategory(@RequestParam("category") String category){
+        List<RecipeDTO> recipes = recipeService.findByCategory(category);
+        return ResponseEntity.ok(recipes);
+    }
+
+
+    @GetMapping("/api/v1/recipes/categories")
+    public ResponseEntity<Set<RecipeDTO>> findByAnyCategories(@RequestBody String... categories){
+        Set<RecipeDTO> recipes = recipeService.findByCategories(categories);
+        return ResponseEntity.ok(recipes);
+    }
+
+
+    @GetMapping("/api/v1/recipes/ingredient_name")
+    public ResponseEntity<List<RecipeDTO>> findByIngredientName(@RequestParam("ingredientName") String ingredientName){
+        List<RecipeDTO> recipes = recipeService.findByIngredientName(ingredientName);
+        return ResponseEntity.ok(recipes);
     }
 
 
