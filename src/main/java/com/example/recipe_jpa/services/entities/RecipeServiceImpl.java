@@ -1,7 +1,8 @@
 package com.example.recipe_jpa.services.entities;
 
 import com.example.recipe_jpa.data.DAO.RecipeDao;
-import com.example.recipe_jpa.model.dto.facade.RecipeDTO;
+import com.example.recipe_jpa.exception.NotFoundException;
+import com.example.recipe_jpa.model.dto.view.RecipeDTO;
 import com.example.recipe_jpa.model.dto.form.RecipeForm;
 import com.example.recipe_jpa.model.entities.Recipe;import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class RecipeServiceImpl implements RecipeService{
 
         if (recipeForm.getId() != id) throw new IllegalArgumentException("id  is not the same!!");
 
-        if (!recipeDao.findById(id).isPresent()) throw new IllegalArgumentException("recipe is not existed!!");
+        if (!recipeDao.findById(id).isPresent()) throw new NotFoundException("recipe is not existed!!");
 
         Recipe recipe = mapper.map(recipeForm,Recipe.class);
 
@@ -61,7 +62,11 @@ public class RecipeServiceImpl implements RecipeService{
 
         Optional<Recipe> recipe = recipeDao.findById(id);
 
-        return mapper.map(recipe.get(),RecipeDTO.class);
+        if (recipe.isPresent()){
+            return mapper.map(recipe.get(),RecipeDTO.class);
+        }else {
+            throw new NotFoundException("recipe has not found!!");
+        }
     }
 
     @Override

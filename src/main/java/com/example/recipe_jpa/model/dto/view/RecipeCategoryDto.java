@@ -1,6 +1,5 @@
-package com.example.recipe_jpa.model.dto.facade;
+package com.example.recipe_jpa.model.dto.view;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeCategoryDto {

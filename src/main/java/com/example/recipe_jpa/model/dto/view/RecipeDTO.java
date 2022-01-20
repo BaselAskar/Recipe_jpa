@@ -1,4 +1,4 @@
-package com.example.recipe_jpa.model.dto.facade;
+package com.example.recipe_jpa.model.dto.view;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,7 +1,8 @@
 package com.example.recipe_jpa.services.entities;
 
 import com.example.recipe_jpa.data.DAO.RecipeInstructionDao;
-import com.example.recipe_jpa.model.dto.facade.RecipeInstructionDto;
+import com.example.recipe_jpa.exception.NotFoundException;
+import com.example.recipe_jpa.model.dto.view.RecipeInstructionDto;
 import com.example.recipe_jpa.model.dto.form.RecipeInstructionForm;
 import com.example.recipe_jpa.model.entities.RecipeInstruction;
 import org.modelmapper.ModelMapper;
@@ -46,7 +47,7 @@ public class RecipeInstructionServiceImpl implements RecipeInstructionService{
 
         if (recipeInstructionForm.getId().equals(id)) throw new IllegalArgumentException("id  is not the same!!");
 
-        if (!recipeInstructionDao.findById(id).isPresent()) throw new IllegalArgumentException("recipe ingredient is not existed!!");
+        if (!recipeInstructionDao.findById(id).isPresent()) throw new NotFoundException("recipe ingredient is not existed!!");
 
         RecipeInstruction recipeInstruction = mapper.map(recipeInstructionForm,RecipeInstruction.class);
 
@@ -65,7 +66,7 @@ public class RecipeInstructionServiceImpl implements RecipeInstructionService{
         if (recipeInstruction.isPresent()){
             return (mapper.map(recipeInstruction.get(),RecipeInstructionDto.class));
         }else {
-            throw new IllegalArgumentException("recipe instruction is not found!!");
+            throw new NotFoundException("recipe instruction is not found!!");
         }
     }
 

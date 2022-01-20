@@ -1,10 +1,10 @@
 package com.example.recipe_jpa.services.entities;
 
 import com.example.recipe_jpa.data.DAO.RecipeCategoryDao;
-import com.example.recipe_jpa.model.dto.facade.RecipeCategoryDto;
+import com.example.recipe_jpa.exception.NotFoundException;
+import com.example.recipe_jpa.model.dto.view.RecipeCategoryDto;
 import com.example.recipe_jpa.model.dto.form.RecipeCategoryFrom;
 import com.example.recipe_jpa.model.entities.RecipeCategory;
-import com.example.recipe_jpa.model.entities.RecipeIngredient;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +46,7 @@ public class RecipeCategoryServiceImpl implements RecipeCategoryService {
 
         if (recipeCategoryFrom.getId() != id) throw new IllegalArgumentException("id  is not the same!!");
 
-        if (!recipeCategoryDao.findById(id).isPresent()) throw new IllegalArgumentException("recipe ingredient is not existed!!");
+        if (!recipeCategoryDao.findById(id).isPresent()) throw new NotFoundException("recipe ingredient is not existed!!");
 
         RecipeCategory recipeCategory = mapper.map(recipeCategoryFrom,RecipeCategory.class);
 
@@ -64,7 +64,7 @@ public class RecipeCategoryServiceImpl implements RecipeCategoryService {
         if (recipeCategory.isPresent()){
             return mapper.map(recipeCategory.get(),RecipeCategoryDto.class);
         }else {
-            throw new RuntimeException("recipe category is not found!!");
+            throw new NotFoundException("recipe category is not found!!");
         }
     }
 

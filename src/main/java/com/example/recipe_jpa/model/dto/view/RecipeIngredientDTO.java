@@ -1,4 +1,4 @@
-package com.example.recipe_jpa.model.dto.facade;
+package com.example.recipe_jpa.model.dto.view;
 
 import com.example.recipe_jpa.model.entities.Ingredient;
 import com.example.recipe_jpa.model.entities.Measurement;

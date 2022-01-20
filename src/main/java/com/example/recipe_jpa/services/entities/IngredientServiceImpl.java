@@ -2,7 +2,7 @@ package com.example.recipe_jpa.services.entities;
 
 import com.example.recipe_jpa.data.DAO.IngredientDao;
 import com.example.recipe_jpa.exception.NotFoundException;
-import com.example.recipe_jpa.model.dto.facade.IngredientDto;
+import com.example.recipe_jpa.model.dto.view.IngredientDto;
 import com.example.recipe_jpa.model.dto.form.IngredientForm;
 import com.example.recipe_jpa.model.entities.Ingredient;
 import org.modelmapper.ModelMapper;
@@ -45,7 +45,7 @@ public class IngredientServiceImpl implements IngredientService{
 
         if (ingredientForm.getId() != id) throw new IllegalArgumentException("Id is not the same!!");
 
-        if (ingredientDao.findById(id).isPresent()) throw new IllegalArgumentException("the ingredient is not found!!");
+        if (ingredientDao.findById(id).isPresent()) throw new NotFoundException("the ingredient is not found!!");
 
         Ingredient ingredient = mapper.map(ingredientForm,Ingredient.class);
 

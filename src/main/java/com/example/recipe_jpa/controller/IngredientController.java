@@ -1,6 +1,6 @@
 package com.example.recipe_jpa.controller;
 
-import com.example.recipe_jpa.model.dto.facade.IngredientDto;
+import com.example.recipe_jpa.model.dto.view.IngredientDto;
 import com.example.recipe_jpa.model.dto.form.IngredientForm;
 import com.example.recipe_jpa.services.entities.IngredientService;
 import com.example.recipe_jpa.validation.OnPost;

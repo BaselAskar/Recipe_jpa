@@ -1,6 +1,6 @@
 package com.example.recipe_jpa.controller;
 
-import com.example.recipe_jpa.model.dto.facade.RecipeCategoryDto;
+import com.example.recipe_jpa.model.dto.view.RecipeCategoryDto;
 import com.example.recipe_jpa.model.dto.form.RecipeCategoryFrom;
 import com.example.recipe_jpa.services.entities.RecipeCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

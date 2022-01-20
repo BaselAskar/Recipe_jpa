@@ -1,6 +1,6 @@
 package com.example.recipe_jpa.services.entities;
 
-import com.example.recipe_jpa.model.dto.facade.RecipeDTO;
+import com.example.recipe_jpa.model.dto.view.RecipeDTO;
 import com.example.recipe_jpa.model.dto.form.RecipeForm;
 
 import java.util.List;
